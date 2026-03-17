@@ -12,8 +12,10 @@
 
 MASTER_BOOT_RECORD mbr;
 
-struct gpt_header gpt;
-struct gpt_partentry part[128];
+extern int leeGPT(char *base, int ini);
+
+//struct gpt_header gpt;
+//struct gpt_partentry part[128];
 
 char *mapFile(char *filePath) {
     /* Abre archivo */
@@ -44,6 +46,7 @@ char *leeMBR(char *ruta){
     return base;
 }
 
+/*
 char *leeGPT(char *base){
    memcpy(&gpt, base, sizeof(struct gpt_header));
 
@@ -74,6 +77,7 @@ char *leeGPT(char *base){
    refresh();
    getch();
 }
+   */
 
 int main()
 {
@@ -120,10 +124,14 @@ int main()
          case KEY_ENTER:
          case 10:
          case 13:
-            leeGPT(base + 0x200);
+            leeGPT(base, mbr.Partition[i].StartingLBA);
+            endwin();
+            return 0;
          clear();
+        /* case 'h':
+            visorHexa();
          break;
-
+*/
 
          default:
             // Nothing 
