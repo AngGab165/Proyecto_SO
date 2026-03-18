@@ -12,9 +12,9 @@ efi_partition_entry part1, part2, part3;
 void printGUID(int y, int x, uint8_t *u){
     mvprintw(y, x,
     "%02x%02x%02x%02x-%02x%02x-%02x%02x-%02x%02x-%02x%02x%02x%02x%02x%02x",
-    u[3],u[2],u[1],u[0],
-    u[5],u[4],
-    u[7],u[6],
+    u[0],u[1],u[2],u[3],
+    u[4],u[5],
+    u[6],u[7],
     u[8],u[9],
     u[10],u[11],u[12],u[13],u[14],u[15]);
 }
