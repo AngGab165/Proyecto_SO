@@ -9,6 +9,7 @@
 #include <sys/mman.h>
 #include "mbr.h"
 #include "gpt.h"
+#include "APFS.h"
 
 MASTER_BOOT_RECORD mbr;
 
@@ -88,6 +89,7 @@ int main()
       }
       move(5+i,5);
       refresh();
+
       c = getch();
       switch(c) {
          case KEY_UP:
@@ -101,16 +103,6 @@ int main()
          case 10:
          case 13:
             leeGPT(base, mbr.Partition[i].StartingLBA);
-            endwin();
-            return 0;
-         clear();
-        /* case 'h':
-            visorHexa();
-         break;
-*/
-
-         default:
-            // Nothing 
             break;
       }
       move(10,5);

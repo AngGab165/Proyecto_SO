@@ -26,5 +26,5 @@ $(BIN) : $(OBJ)
 .PHONY: clean
 clean:
 		echo Limpiando...
-		~rm -r $(OBJ)
-		~rm -r $(BIN)
+		rm -r $(OBJ)
+		rm -r $(BIN)

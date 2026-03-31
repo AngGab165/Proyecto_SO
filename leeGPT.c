@@ -2,8 +2,9 @@
 #include <ncurses.h>
 
 #include "gpt.h"
+#include "APFS.h"
 
-extern int leeAPFS(char *base);
+extern int leeAPFS(char *base, nx_superblock_t *sb);
 
 struct gpt_header gpt;
 
@@ -99,14 +100,20 @@ int leeGPT(char *base, int ini){
             case 10:
                 clear();
 
-                for(int i = 0; i < 16; i++){
-                    mvprintw(i, 0, "%08X: ", i*16);
+                nx_superblock_t sb;
 
-                    for(int j = 0; j < 16; j++){
-                        printw("%02X ",
-                        (unsigned char) base[part1.start * 512 + i*16 + j]);
-                    }
+                uint64_t offset;
+
+                if(i == 0){
+                    leeAPFS(base + part1.start * 512, &sb);
+                } else if(i == 1){
+                    leeAPFS(base + part2.start * 512, &sb);
+                } else if(i == 2){
+                    leeAPFS(base + part3.start * 512, &sb);
                 }
+
+                mvprintw(15, 5, "Offset: %lu", offset);
+                mvprintw(16, 5, "Magic: %x", *(uint32_t *)(base + offset));
                 refresh();
                 getch();
                 break;
