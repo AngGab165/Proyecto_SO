@@ -8,6 +8,9 @@ Para este programa se ocuparon los siguientes archivos:
 - leeMBR.c esto tiene funciones de leer el MBR, es la pantalla principal.
 - leeGPT.c es la lectura de la tabla GPT.
 - leeAPFS.c es la lectura de la particion APFS.
+- leeContenedor.c es la lectura y despliegue de la informacion del contenedor APFS y sus volumenes
+- checksum.c esta contiene el algoritmo y las funciones para validar la integridad de los bloques leidos en APFS
+- checksum.h es la cabecera que define las funciones de validacion utilizadas en el calculo
 - mbr.h es la estructura que tiene para que funcione MBR.
 - gpt.h es la estructura que tiene para que funcione GPT.
 - APFS.h es la estructura que tiene para que funcione APFS.
@@ -23,8 +26,7 @@ apt install libncurses-dev
 Para poder compilar este programa se debe escribir en la terminalel siguiente comando:
 make
 
-Para poder ejecutar este programa nos debemos de asegurar primero tener el archivo DiscoAPFS.dmg sin este no se
-puede ejecutar este programa.
+Para poder ejecutar este programa nos debemos de asegurar primero tener el archivo DiscoAPFS.dmg sin este no se puede ejecutar este programa.
 
 Luego de esto se nos crea un ejecutable y solo debemos escribir el siguiente comando en la terminal:
 - ./leeMBR
@@ -37,6 +39,7 @@ Ya estando adentro de la tabla de particiones de MBR se tienen las siguientes fu
 Para la tabla de particiones GPT del disco que usamos que es DiscoAPFS.dmg tiene las siguientes funciones:
 - Flechas ↑ ↓ para moverse entre particiones.
 - ENTER para acceder a la particion o ver datos hexadecimales en la particion.
+Importante: ya que le dimos ENTER a la particion APFS nos aparece la informacion completa del contenedor y sus volumenes como  la Firma, el Tamaño total, UUID, nombre del Volumen, cantidad de archivos y directorios, y el Root OID del disco.
 - q para regresar a la pantalla principal de particiones MBR o salirte del programa.
 
 Este programa lee el disco directamente ya que usamos mmap, para las direcciones se ocupo el siguiente calculo:

@@ -36,6 +36,27 @@ int leeAPFS(char *base, nx_superblock_t *sb){
 
     mvprintw(10, 5, "Firma: %s Tamaño: %ld", firma, sb->nx_block_count*sb->nx_block_size);
 
+    // Contador de volumenes
+    uint32_t cont = 0;
+    for (int j = 0; j < NX_MAX_FILE_SYSTEMS; j++) {
+        if (sb->nx_fs_oid[j] != 0) {
+            cont++;
+        }
+    }
+
+    mvprintw(1, 5, "Informacion del contenedor:\n");
+    mvprintw(2, 5, "No. Volumenes: %u", cont);
+    mvprintw(3, 5, "Firma: %s Tamaño: %ld", firma, (long)sb->nx_block_count * sb->nx_block_size);
+    mvprintw(4, 5, "UUID: ");
+    // para imprimir el UUID de forma entendible
+    for (int j = 0; j < 16; j++)
+    {
+        printw("%02X", sb->nx_uuid[j]);
+        if (j == 3 || j == 5 || j == 7 || j == 9)
+            printw("-");
+    }
+    refresh();
+
     if(sb->nx_magic != NX_MAGIC){
         mvprintw(12, 5, "No es un sistema de archivos APFS");
         return -1;
@@ -125,9 +146,21 @@ int leeAPFS(char *base, nx_superblock_t *sb){
     return -1;
     }
 
-    //imprime informacion del superblock
-    mvprintw(12, 5, "Volumen: %s", apsb.apfs_volname);
-    mvprintw(13, 5, "Root OID: %ld", (long)apsb.apfs_root_tree_oid);
+    // Inpresion del contenedor y volumenes
+    mvprintw(8, 5, "Informacion de los volumenes");
+    mvprintw(9, 5, "Nombre del volumen %s", apsb.apfs_volname);
+    mvprintw(10, 5, "No. de archivos: %llu", apsb.apfs_num_files);
+    mvprintw(11, 5, "No. de directorios: %llu", apsb.apfs_num_directories);
+    mvprintw(12, 5, "Tam del volumen: %llu", apsb.apfs_fs_alloc_count * sb->nx_block_size);
+    mvprintw(13, 5, "UUID: ");
+    for (int j = 0; j < 16; j++)
+    {
+        printw("%02X", apsb.apfs_vol_uuid[j]);
+        if (j == 3 || j == 5 || j == 7 || j == 9)
+            printw("-");
+    }
+    refresh();
+
 
     //La informacion esta en el apfs_omap_oid
     char *o = base + apsb.apfs_omap_oid * sb->nx_block_size;
