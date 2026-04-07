@@ -308,7 +308,7 @@ struct wrapped_meta_crypto_state
     cp_key_os_version_t key_os_version;
     cp_key_revision_t key_revision;
     uint16_t unused;
-} __attribute__((aligned(2), packed));
+} __attribute__((packed));
 typedef struct wrapped_meta_crypto_state wrapped_meta_crypto_state_t;
 
 struct apfs_superblock
@@ -345,7 +345,7 @@ struct apfs_superblock
     uint64_t apfs_last_mod_time;
     uint64_t apfs_fs_flags;
     apfs_modified_by_t apfs_formatted_by;
-    apfs_modified_by_t apfs_modified_by[APFS_MAX_HIST];
+    apfs_modified_by_t apfs_modified_by_hist[APFS_MAX_HIST];
     uint8_t apfs_volname[APFS_VOLNAME_LEN];
     uint32_t apfs_next_doc_id;
     uint16_t apfs_role;
@@ -363,6 +363,7 @@ struct apfs_superblock
     oid_t reserved_oid;
 };
 typedef struct apfs_superblock apfs_superblock_t;
+
 
 // Sistema de archivos
 typedef enum
@@ -461,7 +462,7 @@ struct j_inode_key
 {
     j_key_t hdr;
 } __attribute__((packed));
-typedef struct j_inode_key_t j_inode_key_t;
+typedef struct j_inode_key j_inode_key_t;
 
 typedef uint32_t uid_t;
 typedef uint32_t gid_t;
