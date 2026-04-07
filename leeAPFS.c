@@ -376,6 +376,7 @@ int leeAPFS(char *base, nx_superblock_t *sb){
     }
     
     // Si es la Segunda particion, muestra el menu interactivo para buscar archivos
+    //Aqui se cambia la direccion id que te da la tabla de archivos
     uint64_t id_buscado = 0x02; 
     
     // Variable para saber qué tabla mostrar 1 o 2
