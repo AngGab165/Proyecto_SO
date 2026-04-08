@@ -320,6 +320,7 @@ int leeAPFS(char *base, nx_superblock_t *sb){
     memcpy(&apsb, sbv, sizeof(apsb));
 
     // Validamos el superbloque APFS
+    //Aqui se le pone el breakpoint para revisar la informacion del superbloque APFS
     if(apsb.apfs_magic != APFS_MAGIC){
         mvprintw(18, 5, "APFS SB invalido");
         return -1;
